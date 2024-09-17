@@ -7,33 +7,65 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { PagedashboardComponent } from './Pages/dashboard/pagedashboard.component';
 import { PagepanierComponent } from './Pages/pagepanier/pagepanier.component';
 import { LoginComponent } from './components/login/login.component';
+import { CategorieComponent } from './components/categorie/categorie.component';
+import { AdminCompComponent } from './components/admin-comp/admin-comp.component';
+import { EditComponentComponent } from './components/edit-component/edit-component.component';
+import { InscriptionComponent } from './components/inscription/inscription.component';
+import { AuthGuard } from './services/AuthGuard.service';
 
 const routes: Routes = [
+
+  {
+    path:"login", 
+    component:LoginComponent,
+    pathMatch:'full'
+  },
   {
     path:"",
-    component:PageaccueilComponent,
-    pathMatch:'full',
-    children:[
-      {
-        path:'pageaccueil', 
-        component:PageaccueilComponent
-      }
-    ]
+    redirectTo:'pageaccueil/produit',
+    pathMatch:'full'
   },
       {
         path:'dashboard', 
         component:PagedashboardComponent,
-        pathMatch:'full'
+        canActivate: [AuthGuard]
+      },  
+       {
+        path:'pageaccueil/:name', 
+        component:PageaccueilComponent,
+        canActivate: [AuthGuard]
       },
       {
         path:'panier', 
         component:PagepanierComponent,
-        pathMatch:'full'
-      },{
-        path:'login', 
-        component:LoginComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path:'cat', 
+        component:CategorieComponent,
+        canActivate: [AuthGuard]
+
+      },
+      {
+        path:"admin/0",
+        redirectTo:'admin/0',
         pathMatch:'full'
       },
+      {
+        path:'admin/:id', 
+        component:AdminCompComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path:'edit', 
+        component:EditComponentComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path:'inscription', 
+        component:InscriptionComponent,
+        pathMatch:'full'
+      }
 ];
 
 @NgModule({
